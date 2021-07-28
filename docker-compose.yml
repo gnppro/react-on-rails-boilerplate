@@ -3,11 +3,20 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - postgres_data_container:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+        - 1025:1025
+        - 1080:1080
   webpacker:
     build: .
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=development
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
     command: bash -c "rm -rf public/packs; bin/webpack-dev-server"
     volumes:
       - .:/myapp
@@ -20,6 +29,12 @@ services:
       - .:/myapp
     ports:
       - "3000:3000"
+    links:
+      - mailcatcher
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
     depends_on:
       - db
       - webpacker
+volumes:
+  postgres_data_container:
