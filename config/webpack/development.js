@@ -1,5 +1,11 @@
-process.env.NODE_ENV = process.env.NODE_ENV || 'development'
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
-const environment = require('./environment')
+const ESLintPlugin = require('eslint-webpack-plugin');
+const environment = require('./environment');
 
-module.exports = environment.toWebpackConfig()
+environment.plugins.prepend(
+  'EslintWebpack',
+  new ESLintPlugin({}),
+);
+
+module.exports = environment.toWebpackConfig();
