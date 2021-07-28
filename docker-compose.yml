@@ -13,6 +13,10 @@ services:
         - 1080:1080
   webpacker:
     build: .
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=development
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
     command: bash -c "rm -rf public/packs; bin/webpack-dev-server"
     volumes:
       - .:/myapp
@@ -27,6 +31,8 @@ services:
       - "3000:3000"
     links:
       - mailcatcher
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
     depends_on:
       - db
       - webpacker
