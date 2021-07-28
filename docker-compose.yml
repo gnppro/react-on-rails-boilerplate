@@ -6,6 +6,11 @@ services:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
+  mailcatcher:
+    image: yappabe/mailcatcher
+    ports:
+        - 1025:1025
+        - 1080:1080
   webpacker:
     build: .
     command: bash -c "rm -rf public/packs; bin/webpack-dev-server"
@@ -20,6 +25,8 @@ services:
       - .:/myapp
     ports:
       - "3000:3000"
+    links:
+      - mailcatcher
     depends_on:
       - db
       - webpacker
