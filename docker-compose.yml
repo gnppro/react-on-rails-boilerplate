@@ -3,7 +3,7 @@ services:
   db:
     image: postgres
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
+      - postgres_data_container:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
   mailcatcher:
@@ -30,3 +30,5 @@ services:
     depends_on:
       - db
       - webpacker
+volumes:
+  postgres_data_container:
