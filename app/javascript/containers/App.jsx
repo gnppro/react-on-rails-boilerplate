@@ -26,7 +26,7 @@ const App = () => (
     <Router>
       <Switch>
         <Route path="/">
-          <Hello name="react + router + redux" />
+          <Hello name="react + router + redux + TailwindCSS" />
         </Route>
       </Switch>
     </Router>
